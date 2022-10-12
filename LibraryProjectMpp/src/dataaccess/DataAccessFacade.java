@@ -19,6 +19,7 @@ public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
 		BOOKS, MEMBERS, USERS;
+	
 	}
 
 	public static final String OUTPUT_DIR = "D:/workspace/MIU-MPP/Day07 Project - Library/src/dataaccess/storage";
