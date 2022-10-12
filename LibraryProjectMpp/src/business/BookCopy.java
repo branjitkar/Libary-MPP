@@ -1,6 +1,9 @@
 package business;
 
-public class BookCopy {
+import java.io.Serializable;
+
+public class BookCopy implements Serializable {
+	private static final long serialVersionUID = -7525240684445327911L;
 	private Book book;
 	private int copyId;
 	private boolean isAvailable;
