@@ -1,17 +1,23 @@
 package business;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Book {
 	private String isbn;
 	private String title;
 	private int maxCheckoutDay;
 	private int numberOfCopy;
+	private List<Author> authors;
+	private List<BookCopy> bookCopies;
 
-	public Book(String isbn, String title, int maxCheckoutDay, int numberOfCopy) {
-		super();
+	public Book(String isbn, String title, int maxCheckoutDay, List<Author> authors) {
 		this.isbn = isbn;
 		this.title = title;
 		this.maxCheckoutDay = maxCheckoutDay;
-		this.numberOfCopy = numberOfCopy;
+		this.numberOfCopy = 0;
+		this.authors = authors;
+		this.bookCopies = new ArrayList<>();
 	}
 
 	public String getIsbn() {
@@ -28,5 +34,19 @@ public class Book {
 
 	public int getNumberOfCopy() {
 		return numberOfCopy;
+	}
+
+	public List<BookCopy> getBookCopies() {
+		// TODO: convert to unmodifiable List
+		return bookCopies;
+	}
+
+	public List<Author> getAuthors() {
+		// TODO: convert to unmodifiable List
+		return authors;
+	}
+
+	public void addCopy() {
+		// TODO: implement this
 	}
 }

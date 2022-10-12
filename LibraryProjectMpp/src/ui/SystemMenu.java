@@ -1,5 +1,12 @@
 package ui;
 
-public class SystemMenu {
+import dataaccess.Auth;
+import dataaccess.User;
 
+public class SystemMenu {
+	private User user;
+
+	public SystemMenu(User user) {
+		this.user = user;
+	}
 }

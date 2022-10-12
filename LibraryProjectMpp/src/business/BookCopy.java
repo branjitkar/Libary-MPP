@@ -1,10 +1,12 @@
 package business;
 
 public class BookCopy {
+	private Book book;
 	private int copyId;
 	private boolean isAvailable;
 
-	public BookCopy(int copyId) {
+	public BookCopy(Book book, int copyId) {
+		this.book = book;
 		this.copyId = copyId;
 		this.isAvailable = true;
 	}
@@ -19,6 +21,10 @@ public class BookCopy {
 
 	public int getCopyId() {
 		return copyId;
+	}
+
+	public Book getBook() {
+		return book;
 	}
 
 }
