@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.HashMap;
-
 import business.Book;
 import business.BookCopy;
 import business.LibraryException;
@@ -13,15 +11,13 @@ public class SystemController {
 	private static DataAccess dao = new DataAccessFacade();
 
 	public void checkoutBook(String isbn, String memberId) throws LibraryException {
-		HashMap<String, Book> allBooks = dao.readBooksMap();
-		HashMap<String, LibraryMember> allMembers = dao.readMemberMap();
+		Book book = dao.getBookByIsbn(isbn);
+		LibraryMember libraryMember = dao.getMemberById(memberId);
 
-		Book book = allBooks.get(isbn);
 		// check if ISBN is valid.
 		if (book == null)
 			throw new LibraryException(String.format("Book with ISBN %s does not exist.", isbn));
 
-		LibraryMember libraryMember = allMembers.get(memberId);
 		// check if memberId is valid
 		if (libraryMember == null)
 			throw new LibraryException(String.format("Library member with id %s does not exist.", memberId));
@@ -32,7 +28,7 @@ public class SystemController {
 			throw new LibraryException(String.format("No copies available for this book.", memberId));
 
 		libraryMember.checkoutBook(bookCopy);
-		
+
 		dao.updateMember(libraryMember);
 		dao.updateBook(book);
 	}

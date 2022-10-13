@@ -23,28 +23,46 @@ public class DataAccessFacade implements DataAccess {
 	}
 
 	public static final String OUTPUT_DIR = "D:/workspace/MIU-MPP/Day07 Project - Library/src/dataaccess/storage";
-	// public static final String OUTPUT_DIR = System.getProperty("user.dir")
-	// + "\\src\\dataaccess\\storage";
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 
-	// implement: other save operations
-	public void saveNewMember(LibraryMember member) {
+	public LibraryMember getMemberById(String id) {
+		// gets library member by id. returns null if not found.
+		HashMap<String, LibraryMember> allMembers = readMemberMap();
+		return allMembers.get(id);
+	}
+
+	public void addMember(LibraryMember member) {
+		// saves new library member to the storage
 		HashMap<String, LibraryMember> mems = readMemberMap();
 		String memberId = member.getMemberId();
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);
 	}
 
-	// updates a member in storage by memberId
 	public void updateMember(LibraryMember member) {
+		// updates a member in storage by memberId
 		HashMap<String, LibraryMember> mems = readMemberMap();
 		String memberId = member.getMemberId();
 		mems.replace(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);
 	}
 
-	// updates a book in storage by book's ISBN
+	public Book getBookByIsbn(String isbn) {
+		// gets book by ISBN. returns null if not found.
+		HashMap<String, Book> allBooks = readBooksMap();
+		return allBooks.get(isbn);
+	}
+
+	public void addBook(Book book) {
+		// saves new book to the storage
+		HashMap<String, Book> books = readBooksMap();
+		String isbn = book.getIsbn();
+		books.put(isbn, book);
+		saveToStorage(StorageType.BOOKS, books);
+	}
+
 	public void updateBook(Book book) {
+		// updates a book in storage by book's ISBN
 		HashMap<String, Book> books = readBooksMap();
 		String isbn = book.getIsbn();
 		books.replace(isbn, book);
