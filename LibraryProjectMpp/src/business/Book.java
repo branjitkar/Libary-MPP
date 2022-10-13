@@ -53,6 +53,7 @@ public class Book implements Serializable {
 		String copyId = Java.util.UUID.randomUUID().toString();
 		bookCopies.add(new BookCopy(this, copyId));
 		numberOfCopy++;
+
 	}
 	//The code block below is to add an author to an existing book object.
 	public void addAuthor(String firstname, String lastname, String phone, Address address, String credential){
