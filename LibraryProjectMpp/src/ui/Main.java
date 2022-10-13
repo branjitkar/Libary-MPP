@@ -1,5 +1,6 @@
 package ui;
 
+import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
@@ -7,13 +8,23 @@ import dataaccess.User;
 public class Main {
 
 	public static void main(String[] args) {
-		// login()
-		DataAccess dal = new DataAccessFacade();
-		User testUser = dal.readUserMap().get("101");
+		System.out.println();
+		System.out.println("Welcome to Library Management System");
 
+		// prompt login
+		Auth loggedInUserAuth = login();
+
+		// go to main menu
+		goToMainMenu(loggedInUserAuth);
+	}
+
+	private static Auth login() {
+		Auth auth = LoginMenu.login();
+		return auth;
+	}
+
+	private static void goToMainMenu(Auth loggedInUserAuth) {
 		SystemMenu sm = new SystemMenu();
-
-		// showing menu for testUser
-		sm.showMenu(testUser);
+		sm.showMenu(loggedInUserAuth);
 	}
 }

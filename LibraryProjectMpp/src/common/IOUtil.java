@@ -9,8 +9,12 @@ public class IOUtil {
 	private static final String SEPARATOR = "____________________________________________";
 
 	public static void printTitle(String title) {
+		printTitle(title, 0);
+	}
+	
+	public static void printTitle(String title, int lineSpaceBeforeTitle) {
 		// create space between titles
-		for (int i = 0; i < 15; i++)
+		for (int i = 0; i < lineSpaceBeforeTitle; i++)
 			System.out.println();
 		System.out.println(SEPARATOR);
 		System.out.println(title);
@@ -40,7 +44,7 @@ public class IOUtil {
 	public static String getSelectedOption(HashMap<String, String> options) {
 		if (options.size() == 0)
 			return null;
-		System.out.println(SEPARATOR);
+		System.out.println();
 		for (Entry<String, String> e : options.entrySet()) {
 			System.out.println(String.format("  %s. %s", e.getKey(), e.getValue()));
 		}
