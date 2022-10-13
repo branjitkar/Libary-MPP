@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import business.Book;
-import business.BookCopy;
 import business.LibraryMember;
-import dataaccess.DataAccessFacade.StorageType;
 
 public class DataAccessFacade implements DataAccess {
 
@@ -22,7 +20,7 @@ public class DataAccessFacade implements DataAccess {
 
 	}
 
-	public static final String OUTPUT_DIR = "D:/workspace/MIU-MPP/Day07 Project - Library/src/dataaccess/storage";
+	public static final String OUTPUT_DIR = "src/dataaccess/storage";
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 
 	public LibraryMember getMemberById(String id) {
