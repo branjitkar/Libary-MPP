@@ -32,11 +32,12 @@ public class SystemMenu {
 		}
 	}
 
-	private void openAdminMenu() {
+	private void openAdminMenu() throws LibraryException {
 		HashMap<String, String> options = new HashMap<>();
 		options.put("0", "Exit");
 		options.put("1", "Add library member");
-		options.put("2", "Add book copy");
+		options.put("2", "Add Book");
+		options.put("3", "Add book copy");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
 
@@ -48,6 +49,9 @@ public class SystemMenu {
 			break;
 		case "2":
 			addBook();
+			break;
+		case "3":
+			addBookCopy();
 			break;
 		}
 	}
@@ -71,8 +75,9 @@ public class SystemMenu {
 		HashMap<String, String> options = new HashMap<>();
 		options.put("0", "Exit");
 		options.put("1", "Add library member");
-		options.put("2", "Add book copy");
-		options.put("3", "Checkout book");
+		options.put("2", "Add Book");
+		options.put("3", "Add book copy");
+		options.put("4", "Checkout book");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
 
@@ -86,6 +91,9 @@ public class SystemMenu {
 			addBook();
 			break;
 		case "3":
+			addBookCopy();
+			break;
+		case "4":
 			checkoutBook();
 		}
 	}
@@ -105,6 +113,15 @@ public class SystemMenu {
 	}
 
 	// TODO: UseCase3 - Antonedei
+	public void addBookCopy() throws LibraryException {
+		IOUtil.printTitle("Add Book Copy", 15);
+		String isbn = IOUtil.getInput("Enter Book ISBN");
+		
+		sc.addBookCopy(isbn);
+
+		IOUtil.printExceptionMessage("Operation Successful");
+	}
+	
 	public void addBook() {
 		// initially focus on adding a copy to an already existing book
 	}
