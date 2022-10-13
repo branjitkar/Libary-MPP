@@ -1,6 +1,7 @@
 package business;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,5 +16,12 @@ public class CheckoutRecord implements Serializable {
 	public List<CheckoutEntry> getCheckoutEntries() {
 		// TODO: return unmodifiable list
 		return checkoutEntries;
+	}
+
+	public void addCheckoutEntry(BookCopy bookCopy) {
+		LocalDate checkoutDate = LocalDate.now();
+		LocalDate dueDate = checkoutDate.plusDays(bookCopy.getBook().getMaxCheckoutDay());
+		CheckoutEntry checkoutEntry = new CheckoutEntry(bookCopy, checkoutDate, dueDate);
+		checkoutEntries.add(checkoutEntry);
 	}
 }

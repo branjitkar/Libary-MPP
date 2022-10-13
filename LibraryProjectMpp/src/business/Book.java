@@ -51,4 +51,16 @@ public class Book implements Serializable {
 	public void addCopy() {
 		// TODO: implement this
 	}
+
+	/**
+	 * @returns the first available bookCopy from the list of bookCopies. null if
+	 *          there are no available bookCopy
+	 */
+	public BookCopy getAvailableCopy() {
+		for (BookCopy copy : bookCopies) {
+			if (copy.isAvailable())
+				return copy;
+		}
+		return null;
+	}
 }
