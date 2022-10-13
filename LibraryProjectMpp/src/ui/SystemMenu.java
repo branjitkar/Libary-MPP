@@ -1,6 +1,9 @@
 package ui;
 
+import java.util.HashMap;
+
 import business.LibraryException;
+import common.IOUtil;
 import controller.SystemController;
 import dataaccess.Auth;
 import dataaccess.User;
@@ -12,7 +15,30 @@ public class SystemMenu {
 	}
 
 	public void showMenu(User u) {
+		HashMap<String, String> options = new HashMap<>();
+		options.put("1", "Add library member");
+		options.put("2", "Add book copy");
+		options.put("3", "Checkout book");
+		options.put("0", "Exit");
 
+		String selectedOption = IOUtil.getSelectedOption(options);
+
+		try {
+			switch (selectedOption) {
+			case "0":
+				break;
+			case "1":
+				addLibraryMember();
+				break;
+			case "2":
+				addBook();
+				break;
+			case "3":
+				checkoutBook();
+			}
+		} catch (LibraryException le) {
+			IOUtil.printExceptionMessage(le.getMessage());
+		}
 	}
 
 	// TODO: UseCase1 - Utsab
@@ -20,11 +46,12 @@ public class SystemMenu {
 
 	}
 
-	// TODO: UseCase2 - Bipul
+	// UseCase2 Checkout - Bipul
 	public void checkoutBook() throws LibraryException {
-		// TODO: ask input for book isbn and memberId
-		String isbn = "test";
-		String memberId = "1001";
+		IOUtil.printTitle("Checkout Book");
+		String isbn = IOUtil.getInput("Enter ISBN");
+		String memberId = IOUtil.getInput("Enter Member Id");
+
 		sc.checkoutBook(isbn, memberId);
 	}
 
