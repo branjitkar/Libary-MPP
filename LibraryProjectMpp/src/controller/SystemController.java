@@ -32,5 +32,8 @@ public class SystemController {
 			throw new LibraryException(String.format("No copies available for this book.", memberId));
 
 		libraryMember.checkoutBook(bookCopy);
+		
+		dao.updateMember(libraryMember);
+		dao.updateBook(book);
 	}
 }
