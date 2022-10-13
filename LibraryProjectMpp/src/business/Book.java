@@ -47,11 +47,17 @@ public class Book implements Serializable {
 		// TODO: convert to unmodifiable List
 		return authors;
 	}
-
-	public void addCopy() {
+	//The code block below is to add a book copy to an existing book object.
+	public void addBookCopy() {
 		// TODO: implement this
+		String copyId = Java.util.UUID.randomUUID().toString();
+		bookCopies.add(new BookCopy(this, copyId));
+		numberOfCopy++;
 	}
-
+	//The code block below is to add an author to an existing book object.
+	public void addAuthor(String firstname, String lastname, String phone, Address address, String credential){
+		authors.add(new Author(firstname, lastname, phone, address, credential));
+	}
 	/**
 	 * @returns the first available bookCopy from the list of bookCopies. null if
 	 *          there are no available bookCopy
