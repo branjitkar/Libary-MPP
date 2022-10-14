@@ -77,4 +77,18 @@ public class IOUtil {
 		System.out.println(ansiYellow + msg + ansiReset);
 		System.out.println(SEPARATOR);
 	}
+
+	/**
+	 * Method to print success message when operation succeeds
+	 *
+	 * @param msg
+	 */
+	public static void printSuccessMessage(String msg) {
+		String ansiGreen = "\u001B[32m";
+		String ansiReset = "\u001B[0m";
+		System.out.println();
+		System.out.println("__[Operation Successful]________________________");
+		System.out.println(ansiGreen + msg + ansiReset);
+		System.out.println(SEPARATOR);
+	}
 }
