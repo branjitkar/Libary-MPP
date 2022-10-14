@@ -33,4 +33,12 @@ public class CheckoutEntry implements Serializable {
 	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
+
+	@Override
+	public String toString() {
+		return "Book ISBN: " + bookCopy.getBook().getIsbn() + "\n" 
+				+ "Copy Number: " + bookCopy.getCopyId() + "\n" 
+				+ "Checkout Date: " + checkoutDate + "\n"
+				+ "Due Date: " + dueDate;
+	}
 }

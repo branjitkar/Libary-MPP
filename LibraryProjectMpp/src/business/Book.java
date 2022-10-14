@@ -20,6 +20,7 @@ public class Book implements Serializable {
 		this.numberOfCopy = 0;
 		this.authors = authors;
 		this.bookCopies = new ArrayList<>();
+		this.addBookCopy();
 	}
 
 	public String getIsbn() {
@@ -94,5 +95,13 @@ public class Book implements Serializable {
 			return false;
 		Book book = (Book) ob;
 		return isbn.equals(book.getIsbn());
+	}
+
+	@Override
+	public String toString() {
+		return "ISBN: " + isbn + "\n" 
+				+ "Title: " + title + "\n" 
+				+ "Max Checkout Day: " + maxCheckoutDay + "\n"
+				+ "Number of Copies: " + numberOfCopy;
 	}
 }

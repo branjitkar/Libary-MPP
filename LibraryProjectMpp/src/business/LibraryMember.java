@@ -25,8 +25,8 @@ public class LibraryMember extends Person {
 	 * Adds book copy to checkoutRecord of member
 	 * @param bookCopy
 	 */
-	public void checkoutBook(BookCopy bookCopy) {
-		this.checkoutRecord.addCheckoutEntry(bookCopy);
+	public CheckoutEntry checkoutBook(BookCopy bookCopy) {
+		return this.checkoutRecord.addCheckoutEntry(bookCopy);
 	}
 	
 	@Override
@@ -35,7 +35,7 @@ public class LibraryMember extends Person {
 				"First Name: "+super.getFirstname()+"\n"+
 				"Last Name: "+super.getFirstname()+"\n"+
 				"Phone Number: "+super.getLastname()+"\n"+
-				"Address: "+super.getAddress()+"\n";		
+				"Address: "+super.getAddress();		
 	} 
 	
 	public List<CheckoutEntry> getCheckOutEntries() {
