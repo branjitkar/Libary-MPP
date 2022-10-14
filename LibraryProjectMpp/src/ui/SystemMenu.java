@@ -129,22 +129,22 @@ public class SystemMenu {
 	}
 
 	// TODO: UseCase1 - Utsab
-	public void addLibraryMember() {
+	public void addLibraryMember() throws LibraryException {
 		IOUtil.printTitle("Add A New Member", 15);
 		String memberId = IOUtil.getInput("Enter Member Id");
 
 		String fname = IOUtil.getInput("Enter First Name");
 		String lname = IOUtil.getInput("Enter Last Name");
 		String phone = IOUtil.getInput("Enter Phone Number");
-		
+
 		String street = IOUtil.getInput("Enter Street");
-		String city   = IOUtil.getInput("Enter City");
-		String state  = IOUtil.getInput("Enter State");
-		String zip    = IOUtil.getInput("Enter Zip");
-		
-		Address address = new Address(street,city,state,zip);
+		String city = IOUtil.getInput("Enter City");
+		String state = IOUtil.getInput("Enter State");
+		String zip = IOUtil.getNumberInput("Enter Zip");
+
+		Address address = new Address(street, city, state, zip);
 		LibraryMember libMem = new LibraryMember(memberId, fname, lname, phone, address);
-	
+
 		sc.addLibraryMember(libMem);
 	}
 
@@ -168,25 +168,28 @@ public class SystemMenu {
 		IOUtil.printTitle("Add Book", 15);
 		String isbn = IOUtil.getInput("Enter Book ISBN");
 		String title = IOUtil.getInput("Enter Book Title");
-		int maxCheckOutDay = Integer.parseInt(IOUtil.getInput("Enter Maximum Checkout Day"));
+		int maxCheckOutDay = Integer.parseInt(IOUtil.getNumberInput("Enter Maximum Checkout Day"));
 		List<Author> authors = new ArrayList<>();
 		while (true) {
 			String firstname = IOUtil.getInput("Enter Author's Firstname");
 			String lastname = IOUtil.getInput("Enter Author's Lastname");
 			String phone = IOUtil.getInput("Enter Author's Phone Number");
+
 			// getting address
-			String address = IOUtil.getInput("Enter Author's Address in this format: (Street, City, State, Zip)");
-			String[] addressArray = address.split(", ");
-			Address actualAddress = new Address(addressArray[0], addressArray[1], addressArray[2], addressArray[3]);
-			// done getting address
+			String street = IOUtil.getInput("Enter Street");
+			String city = IOUtil.getInput("Enter City");
+			String state = IOUtil.getInput("Enter State");
+			String zip = IOUtil.getNumberInput("Enter Zip");
+			Address address = new Address(street, city, state, zip);
+
 			String credential = IOUtil.getInput("Enter Author's credentials");
-			authors.add(new Author(firstname, lastname, phone, actualAddress, credential));
+
+			authors.add(new Author(firstname, lastname, phone, address, credential));
 
 			String check = IOUtil.getInput("Do you want to add more authors? (Y/N)");
-			if (check.toUpperCase().equals("N"))
+			if (!check.toUpperCase().equals("Y"))
 				break;
 		}
-
 		sc.addBook(isbn, title, maxCheckOutDay, authors);
 	}
 

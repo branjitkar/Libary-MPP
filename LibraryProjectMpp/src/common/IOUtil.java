@@ -7,7 +7,10 @@ import java.util.Scanner;
 public class IOUtil {
 	private static Scanner sc = new Scanner(System.in);
 	private static final String SEPARATOR = "______________________________________________________________________";
-
+	private static final String ansiYellow = "\u001B[33m";
+	private static final String ansiGreen = "\u001B[32m";
+	private static final String ansiReset = "\u001B[0m";
+	
 	public static void printTitle(String title) {
 		printTitle(title, 0);
 	}
@@ -36,10 +39,27 @@ public class IOUtil {
 			input = sc.nextLine();
 			if (input.isBlank()) {
 				System.out.println();
-				System.out.println("Input cannot be blank. Please try again.");
+				System.out.println(ansiYellow + "Input cannot be blank. Please try again." + ansiReset);
 			}
 		}
 		return input;
+	}
+
+	/**
+	 * Method to display label and get input string from user in console
+	 * 
+	 * @param label
+	 * @return inputString
+	 */
+	public static String getNumberInput(String label) {
+		while (true) {
+			String input = getInput(label);
+			if (Util.isInteger(input)) {
+				return input;
+			}
+			System.out.println();
+			System.out.println(ansiYellow + "Invalid Input. Please enter a number." + ansiReset);
+		}
 	}
 
 	/**
@@ -64,7 +84,7 @@ public class IOUtil {
 			validInput = options.containsKey(selectedOption);
 			if (!validInput) {
 				System.out.println();
-				System.out.println("You entered an invalid option. Please try again.");
+				System.err.println("You entered an invalid option. Please try again.");
 				System.out.println();
 			}
 		}
@@ -78,8 +98,6 @@ public class IOUtil {
 	 * @param msg
 	 */
 	public static void printExceptionMessage(String msg) {
-		String ansiYellow = "\u001B[33m";
-		String ansiReset = "\u001B[0m";
 		System.out.println();
 		System.out.println("__[Operation failed]__________________________________________________");
 		System.out.println(ansiYellow + msg + ansiReset);
@@ -92,8 +110,6 @@ public class IOUtil {
 	 * @param msg
 	 */
 	public static void printSuccessMessage(String msg) {
-		String ansiGreen = "\u001B[32m";
-		String ansiReset = "\u001B[0m";
 		System.out.println();
 		System.out.println(SEPARATOR);
 		System.out.println(ansiGreen + msg + ansiReset);

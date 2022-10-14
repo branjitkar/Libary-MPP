@@ -124,7 +124,7 @@ public class SystemController {
 				bc.getCopyId(), memberId, dueDate, String.valueOf(isOverdue));
 	}
 	
-	public void addLibraryMember(LibraryMember member) {
+	public void addLibraryMember(LibraryMember member) throws LibraryException {
 		dao.addMember(member);
 		System.out.println("Member Has Been Added Successfully !!! \n\n" + member);
 		

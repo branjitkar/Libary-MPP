@@ -33,9 +33,7 @@ public class LibraryMember extends Person {
 				"First Name: "+super.getFirstname()+"\n"+
 				"Last Name: "+super.getFirstname()+"\n"+
 				"Phone Number: "+super.getLastname()+"\n"+
-				"Address: "+super.getAddress()+"\n"
-				;
-		
+				"Address: "+super.getAddress()+"\n";		
 	} 
 
 }

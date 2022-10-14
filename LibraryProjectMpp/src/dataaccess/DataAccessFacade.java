@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import business.Book;
+import business.LibraryException;
 import business.LibraryMember;
 
 public class DataAccessFacade implements DataAccess {
@@ -29,10 +30,12 @@ public class DataAccessFacade implements DataAccess {
 		return allMembers.get(id);
 	}
 
-	public void addMember(LibraryMember member) {
+	public void addMember(LibraryMember member) throws LibraryException {
 		// saves new library member to the storage
 		HashMap<String, LibraryMember> mems = readMemberMap();
 		String memberId = member.getMemberId();
+		if (mems.get(memberId) != null)
+			throw new LibraryException("Member already exists with member id " + memberId + ".");
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);
 	}
@@ -51,10 +54,12 @@ public class DataAccessFacade implements DataAccess {
 		return allBooks.get(isbn);
 	}
 
-	public void addBook(Book book) {
+	public void addBook(Book book) throws LibraryException {
 		// saves new book to the storage
 		HashMap<String, Book> books = readBooksMap();
 		String isbn = book.getIsbn();
+		if (books.get(isbn) != null)
+			throw new LibraryException("Book already exists for ISBN " + isbn + ".");
 		books.put(isbn, book);
 		saveToStorage(StorageType.BOOKS, books);
 	}
