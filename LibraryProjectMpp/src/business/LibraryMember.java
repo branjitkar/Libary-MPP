@@ -1,5 +1,7 @@
 package business;
 
+import java.util.List;
+
 public class LibraryMember extends Person {
 	private static final long serialVersionUID = -5194813788730605865L;
 	private String memberId;
@@ -35,5 +37,9 @@ public class LibraryMember extends Person {
 				"Phone Number: "+super.getLastname()+"\n"+
 				"Address: "+super.getAddress();		
 	} 
+	
+	public List<CheckoutEntry> getCheckOutEntries() {
+		return this.checkoutRecord.getCheckoutEntries();
+	}
 
 }
