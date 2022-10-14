@@ -3,6 +3,8 @@ package controller;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import business.Address;
@@ -12,6 +14,8 @@ import business.BookCopy;
 import business.CheckoutEntry;
 import business.LibraryException;
 import business.LibraryMember;
+import common.IOUtil;
+import common.Util;
 import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
@@ -129,4 +133,57 @@ public class SystemController {
 		System.out.println("Member Has Been Added Successfully !!! \n\n" + member);
 		
 	}
+
+	public void showMemberRecord() throws LibraryException {
+		
+		String memberId = IOUtil.getInput("Enter Member ID: ");
+		LibraryMember mem = dao.getMemberById(memberId);
+		while (mem == null) {
+			System.out.println("Member Doesn't Exists. Please Enter Valid MemberID.");
+			memberId = IOUtil.getInput("Enter Member ID: ");
+			mem = dao.getMemberById(memberId);
+		}
+		System.out.println("\n"+"Please choose the following option for the user "+mem.getFirstname()+": \n");
+		
+		HashMap<String, String> options = new HashMap<>();
+		options.put("1", "Show Member Details");
+		options.put("2", "Print CheckOut Records");
+
+		String selectedOption = IOUtil.getSelectedOption(options);
+
+		switch (selectedOption) {
+		case "1":
+			System.out.println(mem);
+		case "2":
+			showMemberCheckoutRecord(mem);
+			break;
+		}
+	}
+	
+	public void showMemberCheckoutRecord(LibraryMember mem) {
+//		LocalDate checkoutDate = new LocalDate();
+		List<CheckoutEntry> entries = mem.getCheckOutEntries();
+		List<String> columnHeaders = Arrays.asList(new String[]{"Copy Number","Book ISBN", "Book Title","Checkout Date","Due Date"});
+		
+		List<List<String>> rows = new ArrayList<List<String>>();
+		rows.add(columnHeaders);
+		
+		for(CheckoutEntry entry: entries) {
+			List<String> row = new ArrayList<String>();
+			row.add(entry.getBookCopy().getCopyId());
+			row.add(entry.getBookCopy().getBook().getIsbn());
+			row.add(entry.getBookCopy().getBook().getTitle());
+			row.add(entry.getCheckoutDate().toString());
+			row.add(entry.getDueDate().toString());
+			rows.add(row);
+		}
+		
+		String stline = Util.getRowDividerLine();
+		System.out.println(stline);
+		for(List<String> row:rows) {
+			Util.printRow(row);
+		}
+		
+	}
+	
 }

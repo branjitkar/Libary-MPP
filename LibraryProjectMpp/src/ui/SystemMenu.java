@@ -102,6 +102,7 @@ public class SystemMenu {
 		options.put("3", "Add Book Copy");
 		options.put("4", "Checkout Book");
 		options.put("5", "Overdue report");
+		options.put("6", "Get Member Checkout History");
 		options.put("9", "Exit");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
@@ -123,6 +124,9 @@ public class SystemMenu {
 			break;
 		case "5":
 			showOverdueBookCopies();
+			break;
+		case "6":
+			getMemberCheckoutRecord();
 			break;
 		}
 		return false;
@@ -199,6 +203,11 @@ public class SystemMenu {
 		String isbn = IOUtil.getInput("Enter Book ISBN");
 
 		sc.showOverdueBookCopies(isbn);
+	}
+	// UseCase 6: get list of bookcopies and overdue report by book isbn
+	public void getMemberCheckoutRecord() throws LibraryException {
+		IOUtil.printTitle("Get Member Checkout Record", 15);
+		sc.showMemberRecord(); 
 	}
 
 }
