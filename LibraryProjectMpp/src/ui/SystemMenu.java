@@ -128,8 +128,8 @@ public class SystemMenu {
 		return false;
 	}
 
-	// TODO: UseCase1 - Utsab
-	public void addLibraryMember() throws LibraryException {
+	// UseCase 1 - Utsab
+	private void addLibraryMember() throws LibraryException {
 		IOUtil.printTitle("Add A New Member", 15);
 		String memberId = IOUtil.getInput("Enter Member Id");
 
@@ -149,7 +149,7 @@ public class SystemMenu {
 	}
 
 	// UseCase2 Checkout - Bipul
-	public void checkoutBook() throws LibraryException {
+	private void checkoutBook() throws LibraryException {
 		IOUtil.printTitle("Checkout Book", 15);
 		String isbn = IOUtil.getInput("Enter ISBN");
 		String memberId = IOUtil.getInput("Enter Member Id");
@@ -157,14 +157,14 @@ public class SystemMenu {
 		sc.checkoutBook(isbn, memberId);
 	}
 
-	// TODO: UseCase3 - Antonedei
-	public void addBookCopy() throws LibraryException {
+	// UseCase3 - Antonedei
+	private void addBookCopy() throws LibraryException {
 		IOUtil.printTitle("Add Book Copy", 15);
 		String isbn = IOUtil.getInput("Enter Book ISBN");
 		sc.addBookCopy(isbn);
 	}
 
-	public void addBook() throws LibraryException {
+	private void addBook() throws LibraryException {
 		IOUtil.printTitle("Add Book", 15);
 		String isbn = IOUtil.getInput("Enter Book ISBN");
 		String title = IOUtil.getInput("Enter Book Title");
@@ -194,7 +194,7 @@ public class SystemMenu {
 	}
 
 	// UseCase 6: get list of bookcopies and overdue report by book isbn
-	public void showOverdueBookCopies() throws LibraryException {
+	private void showOverdueBookCopies() throws LibraryException {
 		IOUtil.printTitle("Show Overdue Report", 15);
 		String isbn = IOUtil.getInput("Enter Book ISBN");
 

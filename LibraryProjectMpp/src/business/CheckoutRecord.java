@@ -23,6 +23,7 @@ public class CheckoutRecord implements Serializable {
 		LocalDate dueDate = checkoutDate.plusDays(bookCopy.getBook().getMaxCheckoutDay());
 		CheckoutEntry checkoutEntry = new CheckoutEntry(bookCopy, checkoutDate, dueDate);
 		checkoutEntries.add(checkoutEntry);
+		bookCopy.setAvailable(false);
 		return checkoutEntry;
 	}
 }
