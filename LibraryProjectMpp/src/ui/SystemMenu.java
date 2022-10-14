@@ -7,6 +7,7 @@ import java.util.List;
 import business.Address;
 import business.Author;
 import business.LibraryException;
+import business.LibraryMember;
 import common.IOUtil;
 import controller.SystemController;
 import dataaccess.Auth;
@@ -129,7 +130,22 @@ public class SystemMenu {
 
 	// TODO: UseCase1 - Utsab
 	public void addLibraryMember() {
+		IOUtil.printTitle("Add A New Member", 15);
+		String memberId = IOUtil.getInput("Enter Member Id");
 
+		String fname = IOUtil.getInput("Enter First Name");
+		String lname = IOUtil.getInput("Enter Last Name");
+		String phone = IOUtil.getInput("Enter Phone Number");
+		
+		String street = IOUtil.getInput("Enter Street");
+		String city   = IOUtil.getInput("Enter City");
+		String state  = IOUtil.getInput("Enter State");
+		String zip    = IOUtil.getInput("Enter Zip");
+		
+		Address address = new Address(street,city,state,zip);
+		LibraryMember libMem = new LibraryMember(memberId, fname, lname, phone, address);
+	
+		sc.addLibraryMember(libMem);
 	}
 
 	// UseCase2 Checkout - Bipul

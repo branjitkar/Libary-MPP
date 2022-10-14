@@ -32,5 +32,11 @@ public class Address implements Serializable {
 	public String getZip() {
 		return zip;
 	}
+	
+	@Override
+	public String toString() {
+		//1410 Pioneer St, Brea, CA 92821
+		return street+", "+city+", "+state+" "+zip;
+	}
 
 }

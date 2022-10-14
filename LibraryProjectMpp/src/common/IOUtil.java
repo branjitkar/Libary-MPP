@@ -17,6 +17,7 @@ public class IOUtil {
 		for (int i = 0; i < lineSpaceBeforeTitle; i++)
 			System.out.println();
 		System.out.println(SEPARATOR);
+		System.out.println();
 		System.out.println("  " + title);
 		System.out.println(SEPARATOR);
 	}

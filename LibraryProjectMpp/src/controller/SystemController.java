@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
+import business.Address;
 import business.Author;
 import business.Book;
 import business.BookCopy;
@@ -121,5 +122,11 @@ public class SystemController {
 	private void printBookCopy(BookCopy bc, String memberId, String dueDate, boolean isOverdue) {
 		System.out.printf(" %s | %s | %s | %s | %s | %s \n", bc.getBook().getIsbn(), bc.getBook().getTitle(),
 				bc.getCopyId(), memberId, dueDate, String.valueOf(isOverdue));
+	}
+	
+	public void addLibraryMember(LibraryMember member) {
+		dao.addMember(member);
+		System.out.println("Member Has Been Added Successfully !!! \n\n" + member);
+		
 	}
 }

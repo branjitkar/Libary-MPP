@@ -26,5 +26,16 @@ public class LibraryMember extends Person {
 	public void checkoutBook(BookCopy bookCopy) {
 		this.checkoutRecord.addCheckoutEntry(bookCopy);
 	}
+	
+	@Override
+	public String toString() {
+		return "Member Id: "+ memberId+"\n"+
+				"First Name: "+super.getFirstname()+"\n"+
+				"Last Name: "+super.getFirstname()+"\n"+
+				"Phone Number: "+super.getLastname()+"\n"+
+				"Address: "+super.getAddress()+"\n"
+				;
+		
+	} 
 
 }
