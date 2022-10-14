@@ -95,4 +95,12 @@ public class Book implements Serializable {
 		Book book = (Book) ob;
 		return isbn.equals(book.getIsbn());
 	}
+
+	@Override
+	public String toString() {
+		return "ISBN: " + isbn + "\n" 
+				+ "Title: " + title + "\n" 
+				+ "Max Checkout Day: " + maxCheckoutDay + "\n"
+				+ "Number of Copies: " + numberOfCopy;
+	}
 }

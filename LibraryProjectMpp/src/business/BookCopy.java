@@ -30,4 +30,10 @@ public class BookCopy implements Serializable {
 		return book;
 	}
 
+	@Override
+	public String toString() {
+		return "Copy Number: " + copyId + "\n" 
+				+ "Book ISBN: " + book.getIsbn() + "\n" 
+				+ "Is Available: " + isAvailable + "\n";
+	}
 }
