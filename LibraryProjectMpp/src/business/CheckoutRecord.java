@@ -18,10 +18,11 @@ public class CheckoutRecord implements Serializable {
 		return checkoutEntries;
 	}
 
-	public void addCheckoutEntry(BookCopy bookCopy) {
+	public CheckoutEntry addCheckoutEntry(BookCopy bookCopy) {
 		LocalDate checkoutDate = LocalDate.now();
 		LocalDate dueDate = checkoutDate.plusDays(bookCopy.getBook().getMaxCheckoutDay());
 		CheckoutEntry checkoutEntry = new CheckoutEntry(bookCopy, checkoutDate, dueDate);
 		checkoutEntries.add(checkoutEntry);
+		return checkoutEntry;
 	}
 }

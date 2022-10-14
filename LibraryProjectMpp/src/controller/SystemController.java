@@ -12,6 +12,7 @@ import business.BookCopy;
 import business.CheckoutEntry;
 import business.LibraryException;
 import business.LibraryMember;
+import common.IOUtil;
 import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
@@ -54,11 +55,13 @@ public class SystemController {
 		if (bookCopy == null)
 			throw new LibraryException(String.format("No copies available for this book.", memberId));
 
-		libraryMember.checkoutBook(bookCopy);
+		CheckoutEntry entry = libraryMember.checkoutBook(bookCopy);
 		bookCopy.setAvailable(false);
 
 		dao.updateMember(libraryMember);
 		dao.updateBook(book);
+		
+		IOUtil.printMessage("Book checked out sucessfully !!!\n\n" + entry.toString());
 	}
 
 	// The code block below is to add a new book
@@ -126,7 +129,7 @@ public class SystemController {
 	
 	public void addLibraryMember(LibraryMember member) throws LibraryException {
 		dao.addMember(member);
-		System.out.println("Member Has Been Added Successfully !!! \n\n" + member);
+		IOUtil.printMessage("Member Has Been Added Successfully !!! \n\n" + member);
 		
 	}
 }

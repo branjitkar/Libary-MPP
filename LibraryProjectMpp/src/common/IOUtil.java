@@ -7,10 +7,22 @@ import java.util.Scanner;
 public class IOUtil {
 	private static Scanner sc = new Scanner(System.in);
 	private static final String SEPARATOR = "______________________________________________________________________";
-	public static final String ANSI_RESET = "\u001B[0m";
-	public static final String ANSI_RED = "\u001B[31m";
-	public static final String ANSI_GREEN = "\u001B[32m";
-	public static final String ANSI_YELLOW = "\u001B[33m";
+	private static final String ANSI_RESET = "\u001B[0m";
+	private static final String ANSI_RED = "\u001B[31m";
+	private static final String ANSI_GREEN = "\u001B[32m";
+	private static final String ANSI_YELLOW = "\u001B[33m";
+	private static final String ANSI_YELLOW_BOLD = "\033[1;33m";
+	private static final String ANSI_BLACK_BOLD = "\033[1;30m";
+
+	public static void printWelcomeMessage() {
+		System.out.println();
+//		System.out.println(ANSI_YELLOW
+//				+ "█░░ █ █▄▄ █▀█ ▄▀█ █▀█ █▄█   █▀▄▀█ ▄▀█ █▄░█ ▄▀█ █▄░█ █▀▀ █▀▀ █▀▄▀█ █▀▀ █▄░█ ▀█▀   █▀ █▄█ █▀ ▀█▀ █▀▀ █▀▄▀█\r\n"
+//				+ "█▄▄ █ █▄█ █▀▄ █▀█ █▀▄ ░█░   █░▀░█ █▀█ █░▀█ █▀█ █░▀█ █▄█ ██▄ █░▀░█ ██▄ █░▀█ ░█░   ▄█ ░█░ ▄█ ░█░ ██▄ █░▀░█"
+//				+ ANSI_RESET);
+
+		System.out.println(ANSI_BLACK_BOLD + "\t\t\tWelcome to Library Management System" + ANSI_RESET);
+	}
 
 	public static void printTitle(String title) {
 		printTitle(title, 0);
@@ -20,7 +32,7 @@ public class IOUtil {
 		// create space between titles
 		for (int i = 0; i < lineSpaceBeforeTitle; i++)
 			System.out.println();
-		System.out.println(ANSI_YELLOW + SEPARATOR);
+		System.out.println(ANSI_YELLOW_BOLD + SEPARATOR);
 		System.out.println();
 		System.out.println("  " + title);
 		System.out.println(SEPARATOR + ANSI_RESET);
@@ -36,7 +48,7 @@ public class IOUtil {
 		String input = "";
 		while (input.isBlank()) {
 			System.out.println();
-			System.out.print(label + ": ");
+			System.out.print(ANSI_BLACK_BOLD + label + ": " + ANSI_RESET);
 			input = sc.nextLine();
 			if (input.isBlank()) {
 				System.out.println();
@@ -76,17 +88,14 @@ public class IOUtil {
 		for (Entry<String, String> e : options.entrySet()) {
 			System.out.println(String.format("  %s. %s", e.getKey(), e.getValue()));
 		}
-		System.out.println();
 		String selectedOption = null;
 		boolean validInput = false;
 		while (!validInput) {
-			System.out.print("Enter option: ");
-			selectedOption = sc.nextLine();
+			selectedOption = getInput("Enter option");
 			validInput = options.containsKey(selectedOption);
 			if (!validInput) {
 				System.out.println();
 				System.err.println("You entered an invalid option. Please try again.");
-				System.out.println();
 			}
 		}
 		System.out.println(SEPARATOR);
@@ -100,7 +109,7 @@ public class IOUtil {
 	 */
 	public static void printExceptionMessage(String msg) {
 		System.out.println();
-		System.out.println(ANSI_RED + "__[Operation failed]__________________________________________________");
+		System.out.println(ANSI_RED + "_[Operation failed]___________________________________________________");
 		System.out.println(msg);
 		System.out.println(SEPARATOR + ANSI_RESET);
 	}
@@ -117,7 +126,23 @@ public class IOUtil {
 		System.out.println(SEPARATOR + ANSI_RESET);
 	}
 
+	/**
+	 * Method to print message
+	 * 
+	 * @param msg
+	 */
+	public static void printMessage(String msg) {
+		System.out.println();
+		System.out.println(SEPARATOR);
+		System.out.println(msg);
+		System.out.println(SEPARATOR);
+	}
+
+	/**
+	 * Method to pause console. Must press enter to continue
+	 */
 	public static void pauseConsole() {
 		sc.nextLine();
 	}
+
 }

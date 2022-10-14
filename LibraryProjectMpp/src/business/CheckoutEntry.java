@@ -38,7 +38,7 @@ public class CheckoutEntry implements Serializable {
 	public String toString() {
 		return "Book ISBN: " + bookCopy.getBook().getIsbn() + "\n" 
 				+ "Copy Number: " + bookCopy.getCopyId() + "\n" 
-				+ "Checkout Date" + checkoutDate + "\n"
+				+ "Checkout Date: " + checkoutDate + "\n"
 				+ "Due Date: " + dueDate;
 	}
 }
