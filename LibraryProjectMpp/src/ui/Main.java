@@ -14,8 +14,8 @@ public class Main {
 			// go to main menu
 			goToMainMenu(loggedInUserAuth);
 		} catch (Exception ex) {
-			//log exception here
-			IOUtil.printExceptionMessage("Opps! Something went wrong. Please contact system admin. Press enter to continue.");
+			// log exception here
+			IOUtil.printExceptionMessage("Opps! Something went wrong. Please contact system admin.");
 		}
 	}
 

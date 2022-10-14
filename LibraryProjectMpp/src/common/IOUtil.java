@@ -95,7 +95,7 @@ public class IOUtil {
 			validInput = options.containsKey(selectedOption);
 			if (!validInput) {
 				System.out.println();
-				System.err.println("You entered an invalid option. Please try again.");
+				System.out.println(ANSI_RED + "You entered an invalid option. Please try again." + ANSI_RESET);
 			}
 		}
 		System.out.println(SEPARATOR);
