@@ -137,14 +137,14 @@ public class SystemController {
 
 	public void showMemberRecord() throws LibraryException {
 		
-		String memberId = IOUtil.getInput("Enter Member ID: ");
+		String memberId = IOUtil.getInput("Enter Member ID");
 		LibraryMember mem = dao.getMemberById(memberId);
 		while (mem == null) {
-			System.out.println("Member Doesn't Exists. Please Enter Valid MemberID.");
-			memberId = IOUtil.getInput("Enter Member ID: ");
+			System.out.println(IOUtil.ANSI_RED + "\nMember Doesn't Exists. Please Enter Valid MemberID." + IOUtil.ANSI_RESET);
+			memberId = IOUtil.getInput("Enter Member ID");
 			mem = dao.getMemberById(memberId);
 		}
-		System.out.println("\n"+"Please choose the following option for the user "+mem.getFirstname()+": \n");
+		IOUtil.printMessage(" Please choose the following option for the user "+mem.getFirstname());
 		
 		HashMap<String, String> options = new HashMap<>();
 		options.put("1", "Show Member Details");
@@ -155,6 +155,7 @@ public class SystemController {
 		switch (selectedOption) {
 		case "1":
 			System.out.println(mem);
+			break;
 		case "2":
 			showMemberCheckoutRecord(mem);
 			break;

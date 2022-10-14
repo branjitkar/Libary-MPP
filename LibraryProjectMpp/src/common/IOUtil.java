@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class IOUtil {
 	private static Scanner sc = new Scanner(System.in);
 	private static final String SEPARATOR = "______________________________________________________________________";
-	private static final String ANSI_RESET = "\u001B[0m";
-	private static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_RED = "\u001B[31m";
 	private static final String ANSI_GREEN = "\u001B[32m";
 	private static final String ANSI_YELLOW = "\u001B[33m";
 	private static final String ANSI_YELLOW_BOLD = "\033[1;33m";

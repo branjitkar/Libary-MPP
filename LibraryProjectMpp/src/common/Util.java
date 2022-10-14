@@ -3,7 +3,7 @@ package common;
 import java.util.List;
 
 public class Util {
-	public static final int SPACENUM = 25;
+	public static final int SPACENUM = 30;
 	/**
 	 * @param input
 	 * @return true if input string is integer.
