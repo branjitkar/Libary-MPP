@@ -14,7 +14,6 @@ import dataaccess.Auth;
 
 public class SystemMenu {
 	private static SystemController sc = new SystemController();
-	private Auth auth;
 
 	public SystemMenu() {
 	}
