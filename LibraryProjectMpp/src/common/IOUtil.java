@@ -6,18 +6,18 @@ import java.util.Scanner;
 
 public class IOUtil {
 	private static Scanner sc = new Scanner(System.in);
-	private static final String SEPARATOR = "____________________________________________";
+	private static final String SEPARATOR = "______________________________________________________________________";
 
 	public static void printTitle(String title) {
 		printTitle(title, 0);
 	}
-	
+
 	public static void printTitle(String title, int lineSpaceBeforeTitle) {
 		// create space between titles
 		for (int i = 0; i < lineSpaceBeforeTitle; i++)
 			System.out.println();
 		System.out.println(SEPARATOR);
-		System.out.println(title);
+		System.out.println("  " + title);
 		System.out.println(SEPARATOR);
 	}
 
@@ -28,10 +28,16 @@ public class IOUtil {
 	 * @return inputString
 	 */
 	public static String getInput(String label) {
-		System.out.println();
-		System.out.print(label + ": ");
 		String input = "";
-		input = sc.nextLine();
+		while (input.isBlank()) {
+			System.out.println();
+			System.out.print(label + ": ");
+			input = sc.nextLine();
+			if (input.isBlank()) {
+				System.out.println();
+				System.out.println("Input cannot be blank. Please try again.");
+			}
+		}
 		return input;
 	}
 
@@ -56,6 +62,7 @@ public class IOUtil {
 			selectedOption = sc.nextLine();
 			validInput = options.containsKey(selectedOption);
 			if (!validInput) {
+				System.out.println();
 				System.out.println("You entered an invalid option. Please try again.");
 				System.out.println();
 			}
@@ -63,7 +70,7 @@ public class IOUtil {
 		System.out.println(SEPARATOR);
 		return selectedOption;
 	}
-	
+
 	/**
 	 * Method to print exception message when operation fails
 	 * 
@@ -73,22 +80,26 @@ public class IOUtil {
 		String ansiYellow = "\u001B[33m";
 		String ansiReset = "\u001B[0m";
 		System.out.println();
-		System.out.println("__[Operation failed]________________________");
+		System.out.println("__[Operation failed]__________________________________________________");
 		System.out.println(ansiYellow + msg + ansiReset);
 		System.out.println(SEPARATOR);
 	}
 
 	/**
-	 * Method to print success message when operation succeeds
-	 *
+	 * Method to print message when operation succeeds
+	 * 
 	 * @param msg
 	 */
 	public static void printSuccessMessage(String msg) {
 		String ansiGreen = "\u001B[32m";
 		String ansiReset = "\u001B[0m";
 		System.out.println();
-		System.out.println("__[Operation Successful]________________________");
+		System.out.println(SEPARATOR);
 		System.out.println(ansiGreen + msg + ansiReset);
 		System.out.println(SEPARATOR);
+	}
+
+	public static void pauseConsole() {
+		sc.nextLine();
 	}
 }

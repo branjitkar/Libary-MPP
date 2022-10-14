@@ -15,6 +15,10 @@ public class LibraryMember extends Person {
 		return memberId;
 	}
 	
+	public CheckoutRecord getCheckoutRecord() {
+		return checkoutRecord;
+	}
+	
 	/**
 	 * Adds book copy to checkoutRecord of member
 	 * @param bookCopy

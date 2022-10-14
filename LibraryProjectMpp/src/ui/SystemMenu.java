@@ -19,37 +19,47 @@ public class SystemMenu {
 	}
 
 	public void showMenu(Auth auth) {
-		IOUtil.printTitle("Main Menu", 15);
-		this.auth = auth;
-		try {
-			switch (auth) {
-			case ADMIN:
-				openAdminMenu();
-				break;
-			case LIBRARIAN:
-				openLibrarianMenu();
-				break;
-			case BOTH:
-				openBothMenu();
-				break;
+		while (true) {
+			boolean exit = false;
+			IOUtil.printTitle("Main Menu", 15);
+			try {
+				switch (auth) {
+				case ADMIN:
+					exit = openAdminMenu();
+					break;
+				case LIBRARIAN:
+					exit = openLibrarianMenu();
+					break;
+				case BOTH:
+					exit = openBothMenu();
+					break;
+				}
+				if (exit) {
+					IOUtil.printSuccessMessage("Exit Successful. Bye!");
+					return;
+				}
+
+				IOUtil.printSuccessMessage("Operation Successful. Press enter to continue.");
+				IOUtil.pauseConsole();
+			} catch (LibraryException le) {
+				IOUtil.printExceptionMessage(le.getMessage() + " Press enter to continue.");
+				IOUtil.pauseConsole();
 			}
-		} catch (LibraryException le) {
-			IOUtil.printExceptionMessage(le.getMessage());
 		}
 	}
 
-	private void openAdminMenu() throws LibraryException {
+	private boolean openAdminMenu() throws LibraryException {
 		HashMap<String, String> options = new HashMap<>();
-		options.put("0", "Exit");
 		options.put("1", "Add Library Member");
 		options.put("2", "Add Book");
 		options.put("3", "Add Book Copy");
+		options.put("9", "Exit");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
 
 		switch (selectedOption) {
-		case "0":
-			break;
+		case "9":
+			return true;
 		case "1":
 			addLibraryMember();
 			break;
@@ -60,36 +70,44 @@ public class SystemMenu {
 			addBookCopy();
 			break;
 		}
+		return false;
 	}
 
-	private void openLibrarianMenu() throws LibraryException {
+	private boolean openLibrarianMenu() throws LibraryException {
 		HashMap<String, String> options = new HashMap<>();
-		options.put("0", "Exit");
 		options.put("1", "Checkout book");
+		options.put("2", "Overdue report");
+		options.put("9", "Exit");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
 
 		switch (selectedOption) {
-		case "0":
-			break;
+		case "9":
+			return true;
 		case "1":
 			checkoutBook();
+			break;
+		case "2":
+			showOverdueBookCopies();
+			break;
 		}
+		return false;
 	}
 
-	private void openBothMenu() throws LibraryException {
+	private boolean openBothMenu() throws LibraryException {
 		HashMap<String, String> options = new HashMap<>();
-		options.put("0", "Exit");
 		options.put("1", "Add Library Member");
 		options.put("2", "Add Book");
 		options.put("3", "Add Book Copy");
 		options.put("4", "Checkout Book");
+		options.put("5", "Overdue report");
+		options.put("9", "Exit");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
 
 		switch (selectedOption) {
-		case "0":
-			break;
+		case "9":
+			return true;
 		case "1":
 			addLibraryMember();
 			break;
@@ -101,7 +119,12 @@ public class SystemMenu {
 			break;
 		case "4":
 			checkoutBook();
+			break;
+		case "5":
+			showOverdueBookCopies();
+			break;
 		}
+		return false;
 	}
 
 	// TODO: UseCase1 - Utsab
@@ -122,38 +145,41 @@ public class SystemMenu {
 	public void addBookCopy() throws LibraryException {
 		IOUtil.printTitle("Add Book Copy", 15);
 		String isbn = IOUtil.getInput("Enter Book ISBN");
-		
 		sc.addBookCopy(isbn);
-
-		IOUtil.printSuccessMessage("Operation Successful");
-		showMenu(auth);
 	}
-	
+
 	public void addBook() throws LibraryException {
 		IOUtil.printTitle("Add Book", 15);
 		String isbn = IOUtil.getInput("Enter Book ISBN");
 		String title = IOUtil.getInput("Enter Book Title");
 		int maxCheckOutDay = Integer.parseInt(IOUtil.getInput("Enter Maximum Checkout Day"));
 		List<Author> authors = new ArrayList<>();
-		while(true){
+		while (true) {
 			String firstname = IOUtil.getInput("Enter Author's Firstname");
 			String lastname = IOUtil.getInput("Enter Author's Lastname");
 			String phone = IOUtil.getInput("Enter Author's Phone Number");
-			//getting address
+			// getting address
 			String address = IOUtil.getInput("Enter Author's Address in this format: (Street, City, State, Zip)");
 			String[] addressArray = address.split(", ");
-			Address actualAddress = new Address(addressArray[0],addressArray[1],addressArray[2],addressArray[3]);
-			//done getting address
+			Address actualAddress = new Address(addressArray[0], addressArray[1], addressArray[2], addressArray[3]);
+			// done getting address
 			String credential = IOUtil.getInput("Enter Author's credentials");
-			authors.add(new Author(firstname,lastname,phone,actualAddress,credential));
+			authors.add(new Author(firstname, lastname, phone, actualAddress, credential));
 
 			String check = IOUtil.getInput("Do you want to add more authors? (Y/N)");
-			if (check.toUpperCase().equals("N")) break;
+			if (check.toUpperCase().equals("N"))
+				break;
 		}
 
-		sc.addBook(isbn, title, maxCheckOutDay,authors);
-		IOUtil.printSuccessMessage("Operation Successful");
-		showMenu(auth);
+		sc.addBook(isbn, title, maxCheckOutDay, authors);
+	}
+
+	// UseCase 6: get list of bookcopies and overdue report by book isbn
+	public void showOverdueBookCopies() throws LibraryException {
+		IOUtil.printTitle("Show Overdue Report", 15);
+		String isbn = IOUtil.getInput("Enter Book ISBN");
+
+		sc.showOverdueBookCopies(isbn);
 	}
 
 }

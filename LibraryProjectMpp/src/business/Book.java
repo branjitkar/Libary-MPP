@@ -85,4 +85,14 @@ public class Book implements Serializable {
 		int nextCopyIdVal = Integer.parseInt(maxCopyId) + 1;
 		return String.valueOf(nextCopyIdVal);
 	}
+
+	@Override
+	public boolean equals(Object ob) {
+		if (ob == null)
+			return false;
+		if (!(ob instanceof Book))
+			return false;
+		Book book = (Book) ob;
+		return isbn.equals(book.getIsbn());
+	}
 }

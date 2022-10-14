@@ -1,9 +1,6 @@
 package ui;
 
 import dataaccess.Auth;
-import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade;
-import dataaccess.User;
 
 public class Main {
 

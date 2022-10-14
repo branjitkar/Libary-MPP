@@ -1,11 +1,14 @@
 package controller;
 
 import java.util.List;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 import business.Author;
 import business.Book;
 import business.BookCopy;
+import business.CheckoutEntry;
 import business.LibraryException;
 import business.LibraryMember;
 import dataaccess.Auth;
@@ -51,6 +54,7 @@ public class SystemController {
 			throw new LibraryException(String.format("No copies available for this book.", memberId));
 
 		libraryMember.checkoutBook(bookCopy);
+		bookCopy.setAvailable(false);
 
 		dao.updateMember(libraryMember);
 		dao.updateBook(book);
@@ -66,17 +70,6 @@ public class SystemController {
 		dao.addBook(new Book(isbn, title, maxCheckoutDay, authors));
 	}
 
-	// The code block below is to add authors to an existing book
-//	public void getAuthor(String isbn, String firstname, String lastname, String phone, Address address,
-//			String credential) throws LibraryException {
-//		Book book = dao.getBookByIsbn(isbn);
-//		if (book == null) {
-//			throw new LibraryException(String.format("Book with ISBN %s does not exist.", isbn));
-//		}
-//		book.addAuthor(firstname, lastname, phone, address, credential);
-//		dao.updateBook(book);
-//	}
-
 	// The code block below is to add a book copy to an existing book object.
 	public void addBookCopy(String isbn) throws LibraryException {
 		Book book = dao.getBookByIsbn(isbn);
@@ -85,5 +78,48 @@ public class SystemController {
 		}
 		book.addBookCopy();
 		dao.updateBook(book);
+	}
+
+	public void showOverdueBookCopies(String isbn) throws LibraryException {
+		Book book = dao.getBookByIsbn(isbn);
+		if (book == null) {
+			throw new LibraryException(String.format("Book with ISBN %s does not exist.", isbn));
+		}
+		if (book.getNumberOfCopy() == 0)
+			return;
+		System.out.println();
+		System.out.println(" ISBN | Title | Copy Num | Member Id | Due Date | Is Overdue");
+		showAvailableBookCopies(book);
+		showCheckedoutBookCopies(book);
+
+	}
+
+	private void showAvailableBookCopies(Book book) {
+		for (BookCopy bc : book.getBookCopies()) {
+			if (bc.isAvailable()) {
+				printBookCopy(bc, "", "", false);
+			}
+		}
+	}
+
+	private void showCheckedoutBookCopies(Book book) {
+		HashMap<String, LibraryMember> allMembers = dao.readMemberMap();
+		for (LibraryMember member : allMembers.values()) {
+			String memberId = member.getMemberId();
+			for (CheckoutEntry entry : member.getCheckoutRecord().getCheckoutEntries()) {
+				BookCopy bc = entry.getBookCopy();
+				LocalDate dueDate = entry.getDueDate();
+				long daysRemaining = ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+				boolean isOverdue = daysRemaining < 0;
+				if (entry.getBookCopy().getBook().equals(book)) {
+					printBookCopy(bc, memberId, dueDate.toString(), isOverdue);
+				}
+			}
+		}
+	}
+
+	private void printBookCopy(BookCopy bc, String memberId, String dueDate, boolean isOverdue) {
+		System.out.printf(" %s | %s | %s | %s | %s | %s \n", bc.getBook().getIsbn(), bc.getBook().getTitle(),
+				bc.getCopyId(), memberId, dueDate, String.valueOf(isOverdue));
 	}
 }
