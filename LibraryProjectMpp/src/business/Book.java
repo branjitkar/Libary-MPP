@@ -40,12 +40,10 @@ public class Book implements Serializable {
 	}
 
 	public List<BookCopy> getBookCopies() {
-		// TODO: convert to unmodifiable List
 		return bookCopies;
 	}
 
 	public List<Author> getAuthors() {
-		// TODO: convert to unmodifiable List
 		return authors;
 	}
 

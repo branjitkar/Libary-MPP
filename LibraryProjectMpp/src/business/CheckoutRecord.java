@@ -14,7 +14,6 @@ public class CheckoutRecord implements Serializable {
 	}
 
 	public List<CheckoutEntry> getCheckoutEntries() {
-		// TODO: return unmodifiable list
 		return checkoutEntries;
 	}
 

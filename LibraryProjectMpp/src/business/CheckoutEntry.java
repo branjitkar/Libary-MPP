@@ -16,17 +16,14 @@ public class CheckoutEntry implements Serializable {
 	}
 
 	public BookCopy getBookCopy() {
-		// TODO: return unmodifiable object
 		return bookCopy;
 	}
 
 	public LocalDate getCheckoutDate() {
-		// TODO: return unmodifiable object
 		return checkoutDate;
 	}
 
 	public LocalDate getDueDate() {
-		// TODO: return unmodifiable object
 		return dueDate;
 	}
 
