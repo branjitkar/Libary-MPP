@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import business.Address;
 import business.Author;
 import business.Book;
 import business.BookCopy;
@@ -62,7 +61,7 @@ public class SystemController {
 
 		dao.updateMember(libraryMember);
 		dao.updateBook(book);
-		
+
 		IOUtil.printMessage("Book checked out sucessfully !!!\n\n" + entry.toString());
 	}
 
@@ -93,22 +92,42 @@ public class SystemController {
 		}
 		if (book.getNumberOfCopy() == 0)
 			return;
-		System.out.println();
-		System.out.println(" ISBN | Title | Copy Num | Member Id | Due Date | Is Overdue");
-		showAvailableBookCopies(book);
-		showCheckedoutBookCopies(book);
+		List<String> columnHeaders = Arrays.asList(
+				new String[] { "Book ISBN", "Book Title", "Book Copy Num", "Member ID", "Due Date", "Is Overdue" });
 
-	}
+		List<List<String>> rows = new ArrayList<List<String>>();
+		rows.add(columnHeaders);
 
-	private void showAvailableBookCopies(Book book) {
-		for (BookCopy bc : book.getBookCopies()) {
-			if (bc.isAvailable()) {
-				printBookCopy(bc, "", "", false);
-			}
+		rows.addAll(getAvailableBookCopiesDetailsForOverdueReport(book));
+		rows.addAll(getCheckedoutBookCopiesDetailsForOverdueReport(book));
+
+		String stline = Util.getRowDividerLine(columnHeaders.size());
+		System.out.println(stline);
+
+		for (List<String> row : rows) {
+			Util.printRow(row);
 		}
 	}
 
-	private void showCheckedoutBookCopies(Book book) {
+	private List<List<String>> getAvailableBookCopiesDetailsForOverdueReport(Book book) {
+		List<List<String>> rows = new ArrayList<>();
+		for (BookCopy bc : book.getBookCopies()) {
+			if (bc.isAvailable()) {
+				List<String> row = new ArrayList<String>();
+				row.add(bc.getBook().getIsbn());
+				row.add(bc.getBook().getTitle());
+				row.add(bc.getCopyId());
+				row.add("");
+				row.add("");
+				row.add("false");
+				rows.add(row);
+			}
+		}
+		return rows;
+	}
+
+	private List<List<String>> getCheckedoutBookCopiesDetailsForOverdueReport(Book book) {
+		List<List<String>> rows = new ArrayList<>();
 		HashMap<String, LibraryMember> allMembers = dao.readMemberMap();
 		for (LibraryMember member : allMembers.values()) {
 			String memberId = member.getMemberId();
@@ -118,34 +137,43 @@ public class SystemController {
 				long daysRemaining = ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
 				boolean isOverdue = daysRemaining < 0;
 				if (entry.getBookCopy().getBook().equals(book)) {
-					printBookCopy(bc, memberId, dueDate.toString(), isOverdue);
+					List<String> row = new ArrayList<String>();
+					row.add(bc.getBook().getIsbn());
+					row.add(bc.getBook().getTitle());
+					row.add(bc.getCopyId());
+					row.add(memberId);
+					row.add(entry.getDueDate().toString());
+					row.add(String.valueOf(isOverdue));
+					rows.add(row);
 				}
 			}
 		}
+		return rows;
 	}
 
-	private void printBookCopy(BookCopy bc, String memberId, String dueDate, boolean isOverdue) {
-		System.out.printf(" %s | %s | %s | %s | %s | %s \n", bc.getBook().getIsbn(), bc.getBook().getTitle(),
-				bc.getCopyId(), memberId, dueDate, String.valueOf(isOverdue));
-	}
-	
+//	private void printBookCopy(BookCopy bc, String memberId, String dueDate, boolean isOverdue) {
+//		System.out.printf(" %s | %s | %s | %s | %s | %s \n", bc.getBook().getIsbn(), bc.getBook().getTitle(),
+//				bc.getCopyId(), memberId, dueDate, String.valueOf(isOverdue));
+//	}
+
 	public void addLibraryMember(LibraryMember member) throws LibraryException {
 		dao.addMember(member);
 		IOUtil.printMessage("Member Has Been Added Successfully !!! \n\n" + member);
-		
+
 	}
 
 	public void showMemberRecord() throws LibraryException {
-		
+
 		String memberId = IOUtil.getInput("Enter Member ID");
 		LibraryMember mem = dao.getMemberById(memberId);
 		while (mem == null) {
-			System.out.println(IOUtil.ANSI_RED + "\nMember Doesn't Exists. Please Enter Valid MemberID." + IOUtil.ANSI_RESET);
+			System.out.println(
+					IOUtil.ANSI_RED + "\nMember Doesn't Exists. Please Enter Valid MemberID." + IOUtil.ANSI_RESET);
 			memberId = IOUtil.getInput("Enter Member ID");
 			mem = dao.getMemberById(memberId);
 		}
-		IOUtil.printMessage(" Please choose the following option for the user "+mem.getFirstname());
-		
+		IOUtil.printMessage(" Please choose the following option for the user " + mem.getFirstname());
+
 		HashMap<String, String> options = new HashMap<>();
 		options.put("1", "Show Member Details");
 		options.put("2", "Print CheckOut Records");
@@ -161,16 +189,17 @@ public class SystemController {
 			break;
 		}
 	}
-	
+
 	public void showMemberCheckoutRecord(LibraryMember mem) {
 //		LocalDate checkoutDate = new LocalDate();
 		List<CheckoutEntry> entries = mem.getCheckOutEntries();
-		List<String> columnHeaders = Arrays.asList(new String[]{"Copy Number","Book ISBN", "Book Title","Checkout Date","Due Date"});
-		
+		List<String> columnHeaders = Arrays
+				.asList(new String[] { "Copy Number", "Book ISBN", "Book Title", "Checkout Date", "Due Date" });
+
 		List<List<String>> rows = new ArrayList<List<String>>();
 		rows.add(columnHeaders);
-		
-		for(CheckoutEntry entry: entries) {
+
+		for (CheckoutEntry entry : entries) {
 			List<String> row = new ArrayList<String>();
 			row.add(entry.getBookCopy().getCopyId());
 			row.add(entry.getBookCopy().getBook().getIsbn());
@@ -179,13 +208,13 @@ public class SystemController {
 			row.add(entry.getDueDate().toString());
 			rows.add(row);
 		}
-		
-		String stline = Util.getRowDividerLine();
+
+		String stline = Util.getRowDividerLine(columnHeaders.size());
 		System.out.println(stline);
-		for(List<String> row:rows) {
+		for (List<String> row : rows) {
 			Util.printRow(row);
 		}
-		
+
 	}
-	
+
 }

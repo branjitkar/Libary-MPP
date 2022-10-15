@@ -53,7 +53,6 @@ public class SystemMenu {
 		options.put("1", "Add Library Member");
 		options.put("2", "Add Book");
 		options.put("3", "Add Book Copy");
-		options.put("4", "Get Member Checkout History");
 		options.put("9", "Exit");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
@@ -70,9 +69,6 @@ public class SystemMenu {
 		case "3":
 			addBookCopy();
 			break;
-		case "4":
-			getMemberCheckoutRecord();
-			break;
 		}
 		return false;
 	}
@@ -81,6 +77,7 @@ public class SystemMenu {
 		HashMap<String, String> options = new HashMap<>();
 		options.put("1", "Checkout book");
 		options.put("2", "Overdue report");
+		options.put("3", "Get Member Checkout History");
 		options.put("9", "Exit");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
@@ -93,6 +90,9 @@ public class SystemMenu {
 			break;
 		case "2":
 			showOverdueBookCopies();
+			break;
+		case "3":
+			getMemberCheckoutRecord();
 			break;
 		}
 		return false;

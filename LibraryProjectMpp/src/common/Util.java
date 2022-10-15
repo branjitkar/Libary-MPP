@@ -34,13 +34,13 @@ public class Util {
 			 }
 			strBldr.append("| ");
 		}
-		strBldr.append("\n"+getRowDividerLine());
+		strBldr.append("\n"+getRowDividerLine(listOfString.size()));
 		return strBldr.toString();
 	}
 	
-	public static String getRowDividerLine() {
+	public static String getRowDividerLine(int columnCount) {
 		StringBuilder strbldr = new StringBuilder();
-		 for (int i = 1; i < SPACENUM * 5 + 6; i++) {
+		 for (int i = 1; i < SPACENUM * columnCount + 6; i++) {
 			 strbldr.append("-");
 		 }
 		 return strbldr.toString();
