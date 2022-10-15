@@ -33,8 +33,8 @@ public class LibraryMember extends Person {
 	public String toString() {
 		return "Member Id: "+ memberId+"\n"+
 				"First Name: "+super.getFirstname()+"\n"+
-				"Last Name: "+super.getFirstname()+"\n"+
-				"Phone Number: "+super.getLastname()+"\n"+
+				"Last Name: "+super.getLastname()+"\n"+
+				"Phone Number: "+super.getPhone()+"\n"+
 				"Address: "+super.getAddress();		
 	} 
 	
