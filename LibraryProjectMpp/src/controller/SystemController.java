@@ -101,12 +101,8 @@ public class SystemController {
 		rows.addAll(getAvailableBookCopiesDetailsForOverdueReport(book));
 		rows.addAll(getCheckedoutBookCopiesDetailsForOverdueReport(book));
 
-		String stline = Util.getRowDividerLine(columnHeaders.size());
-		System.out.println(stline);
+		Util.printTable(rows);
 
-		for (List<String> row : rows) {
-			Util.printRow(row);
-		}
 	}
 
 	private List<List<String>> getAvailableBookCopiesDetailsForOverdueReport(Book book) {
@@ -209,12 +205,46 @@ public class SystemController {
 			rows.add(row);
 		}
 
-		String stline = Util.getRowDividerLine(columnHeaders.size());
-		System.out.println(stline);
-		for (List<String> row : rows) {
-			Util.printRow(row);
+		Util.printTable(rows);
+	}
+
+	public void showAllLibraryMembers() {
+		List<List<String>> rows = new ArrayList<>();
+		List<String> columnHeaders = Arrays
+				.asList(new String[] { "Member ID", "First Name", "Last Name", "Address", "Phone" });
+		rows.add(columnHeaders);
+
+		HashMap<String, LibraryMember> allMembers = dao.readMemberMap();
+		for (LibraryMember member : allMembers.values()) {
+			List<String> row = new ArrayList<String>();
+			row.add(member.getMemberId());
+			row.add(member.getFirstname());
+			row.add(member.getLastname());
+			row.add(member.getAddress().toString());
+			row.add(member.getPhone());
+			rows.add(row);
 		}
 
+		Util.printTable(rows);
+	}
+
+	public void showAllBooks() {
+		List<List<String>> rows = new ArrayList<>();
+		List<String> columnHeaders = Arrays
+				.asList(new String[] { "Book ISBN", "Book Title", "Max Checkout Days", "Number Of Copies" });
+		rows.add(columnHeaders);
+
+		HashMap<String, Book> allBooks = dao.readBooksMap();
+		for (Book book : allBooks.values()) {
+			List<String> row = new ArrayList<String>();
+			row.add(book.getIsbn());
+			row.add(book.getTitle());
+			row.add(String.valueOf(book.getMaxCheckoutDay()));
+			row.add(String.valueOf(book.getNumberOfCopy()));
+			rows.add(row);
+		}
+
+		Util.printTable(rows);
 	}
 
 }

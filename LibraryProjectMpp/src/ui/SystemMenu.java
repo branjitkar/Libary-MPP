@@ -78,6 +78,8 @@ public class SystemMenu {
 		options.put("1", "Checkout book");
 		options.put("2", "Overdue report");
 		options.put("3", "Get Member Checkout History");
+		options.put("4", "View All Library Members");
+		options.put("5", "View All Books");
 		options.put("9", "Exit");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
@@ -94,6 +96,12 @@ public class SystemMenu {
 		case "3":
 			getMemberCheckoutRecord();
 			break;
+		case "4":
+			showAllLibraryMembers();
+			break;
+		case "5":
+			showAllBooks();
+			break;
 		}
 		return false;
 	}
@@ -106,6 +114,8 @@ public class SystemMenu {
 		options.put("4", "Checkout Book");
 		options.put("5", "Overdue report");
 		options.put("6", "Get Member Checkout History");
+		options.put("7", "View All Library Members");
+		options.put("8", "View All Books");
 		options.put("9", "Exit");
 
 		String selectedOption = IOUtil.getSelectedOption(options);
@@ -130,6 +140,12 @@ public class SystemMenu {
 			break;
 		case "6":
 			getMemberCheckoutRecord();
+			break;
+		case "7":
+			showAllLibraryMembers();
+			break;
+		case "8":
+			showAllBooks();
 			break;
 		}
 		return false;
@@ -209,9 +225,19 @@ public class SystemMenu {
 	}
 
 	// UseCase 6: get list of bookcopies and overdue report by book isbn
-	public void getMemberCheckoutRecord() throws LibraryException {
+	private void getMemberCheckoutRecord() throws LibraryException {
 		IOUtil.printTitle("Get Member Checkout Record", 15);
 		sc.showMemberRecord();
+	}
+	
+	private void showAllLibraryMembers() {
+		IOUtil.printTitle("Library Member List", 15);
+		sc.showAllLibraryMembers();
+	}
+	
+	private void showAllBooks() {
+		IOUtil.printTitle("Book List", 15);
+		sc.showAllBooks();
 	}
 
 }
